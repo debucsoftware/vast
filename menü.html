@@ -480,6 +480,31 @@
             border-radius: 10px;
             object-fit: cover;
             display: block;
+            cursor: pointer;
+        }
+
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .image-modal.active {
+            display: flex;
+        }
+
+        .image-modal img {
+            max-width: min(92vw, 900px);
+            max-height: 92vh;
+            width: auto;
+            height: auto;
+            border-radius: 12px;
+            display: block;
         }
         
         .menu-list-item:hover {
@@ -2041,7 +2066,35 @@
                 document.getElementById(`${category}-menu`).classList.add('active');
             });
         });
+
+        // Image modal (menu item images)
+        const imageModal = document.getElementById('imageModal');
+        const imageModalImg = document.getElementById('imageModalImg');
+
+        document.addEventListener('click', (e) => {
+            const img = e.target && e.target.closest ? e.target.closest('.menu-item-image img') : null;
+            if (img) {
+                imageModalImg.src = img.currentSrc || img.src;
+                imageModalImg.alt = img.alt || '';
+                imageModal.classList.add('active');
+            }
+        });
+
+        imageModal.addEventListener('click', () => {
+            imageModal.classList.remove('active');
+            imageModalImg.src = '';
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                imageModal.classList.remove('active');
+                imageModalImg.src = '';
+            }
+        });
     </script>
+    <div class="image-modal" id="imageModal" aria-hidden="true">
+        <img id="imageModalImg" alt="">
+    </div>
     <div class="footer-counter footer-counter-injected" id="site-counter-wrap-bottom">
         <script type="text/javascript" src="https://www.free-counters.org/count/jieh"></script>
     </div>
