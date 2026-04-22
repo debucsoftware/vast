@@ -1,0 +1,2049 @@
+<html lang="tr"><head><base target="_blank">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vast - Restoran Menüsü</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Fredoka:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-gold: #D4AF37;
+            --secondary-gold: #C9A961;
+            --dark-brown: #5C4033;
+            --light-beige: #F5F1E8;
+            --cream: #E8E0D0;
+            --orange: #FF6B35;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            background: var(--light-beige);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            overflow-x: hidden;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(245, 241, 232, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        nav.scrolled {
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+        
+        .logo-nav {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 32px;
+            font-weight: 600;
+            color: #523D2F;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark-brown);
+            font-weight: 400;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--primary-gold);
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+        
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--dark-brown);
+            transition: all 0.3s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--light-beige);
+            background-image: 
+                radial-gradient(circle at 20% 20%, rgba(0,0,0,0.01) 1px, transparent 1px),
+                radial-gradient(circle at 50% 50%, rgba(0,0,0,0.01) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, rgba(0,0,0,0.01) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px, 200px 200px;
+            background-position: 0 0, 0 0, 0 0;
+            animation: backgroundMove 20s ease-in-out infinite;
+            position: relative;
+        }
+        
+        @keyframes backgroundMove {
+            0%, 100% {
+                background-position: 0 0, 0 0, 0 0;
+            }
+            50% {
+                background-position: 50px 50px, -30px 30px, 20px -20px;
+            }
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 40px;
+            position: relative;
+            animation: containerFadeIn 0.5s ease-out;
+        }
+        
+        @keyframes containerFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .main-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 110px;
+            font-weight: 600;
+            color: #523D2F;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            position: relative;
+            animation: fadeInUp 1s ease-out, float 6s ease-in-out infinite;
+            animation-delay: 0s, 2s;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+                filter: brightness(1);
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: brightness(1.15);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .divider {
+            width: 0;
+            height: 1.5px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #C9A961 20%, 
+                #B8860B 50%, 
+                #C9A961 80%, 
+                transparent 100%);
+            margin: 25px auto;
+            opacity: 0.8;
+            animation: expandLine 1.5s ease-out 0.8s forwards, pulse 3s ease-in-out 2.5s infinite;
+        }
+        
+        @keyframes expandLine {
+            from {
+                width: 0;
+            }
+            to {
+                width: 280px;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.8;
+                box-shadow: 0 0 0px rgba(201, 169, 97, 0);
+            }
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 8px rgba(201, 169, 97, 0.4);
+            }
+        }
+        
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 10px;
+            background: linear-gradient(135deg, #5C4033 0%, #3D2817 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            margin: 8px 0;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.8s ease-out forwards;
+            transition: all 0.3s ease;
+        }
+        
+        .subtitle:nth-child(3) {
+            animation-delay: 1.5s;
+        }
+        
+        .subtitle:nth-child(4) {
+            animation-delay: 1.7s;
+        }
+        
+        .subtitle:nth-child(5) {
+            animation-delay: 1.9s;
+        }
+        
+        .subtitle:hover {
+            letter-spacing: 12px;
+            transform: translateX(0) scale(1.05);
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+        
+        .scroll-indicator span {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--dark-brown);
+        }
+        
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 24px;
+            color: var(--primary-gold);
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+        
+        /* Sections */
+        section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 56px;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 16px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--dark-brown);
+            opacity: 0.7;
+            margin-bottom: 60px;
+        }
+        
+        /* Menu Section */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .menu-item:hover::before {
+            left: 100%;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .menu-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .menu-item h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--dark-brown);
+            font-weight: 500;
+        }
+        
+        .menu-item p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--dark-brown);
+            opacity: 0.8;
+        }
+        
+        /* Detailed Menu Styles */
+        .menu-categories {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .menu-category-btn {
+            padding: 12px 30px;
+            background: white;
+            border: 2px solid var(--cream);
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-brown);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .menu-category-btn.active,
+        .menu-category-btn:hover {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+            color: white;
+            border-color: var(--primary-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .menu-content {
+            display: none;
+        }
+        
+        .menu-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .menu-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .menu-list-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .menu-item-image {
+            flex: 0 0 auto;
+        }
+
+        .menu-item-image img {
+            width: 64px;
+            height: 64px;
+            border-radius: 10px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .menu-list-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .menu-item-info {
+            flex: 1;
+        }
+        
+        .menu-item-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-brown);
+            margin-bottom: 8px;
+        }
+        
+        .menu-item-description {
+            font-size: 14px;
+            color: var(--dark-brown);
+            opacity: 0.7;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .menu-item-price {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-gold);
+            white-space: nowrap;
+        }
+        
+        .menu-item-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--cream);
+            color: var(--dark-brown);
+            font-size: 11px;
+            border-radius: 20px;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .menu-item-badge.vegetarian {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+        
+        .menu-item-badge.gluten-free {
+            background: #fff3e0;
+            color: #e65100;
+        }
+        
+        /* Reservation Section */
+        .reservation-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-brown);
+            letter-spacing: 0.5px;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--cream);
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: var(--dark-brown);
+            transition: all 0.3s ease;
+            background: var(--light-beige);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            background: white;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--primary-gold) 0%, var(--secondary-gold) 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .contact-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .contact-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+        
+        .contact-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark-brown);
+            font-weight: 500;
+        }
+        
+        .contact-card p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--dark-brown);
+            opacity: 0.8;
+        }
+        
+        .contact-card a {
+            color: var(--primary-gold);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Map Section */
+        .map-container {
+            margin-top: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            height: 400px;
+            background: var(--cream);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-brown);
+            color: var(--cream);
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #523D2F;
+        }
+        
+        .footer-text {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: var(--cream);
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-gold);
+            transform: translateY(-3px);
+        }
+        
+        .social-links-icons span {
+            color: var(--cream);
+            font-size: 20px;
+            pointer-events: none;
+            cursor: default;
+        }
+        
+        .footer-counter {
+            margin-top: 16px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--cream);
+        }
+        
+        .footer-counter a {
+            color: var(--cream);
+            font-size: 12px;
+            opacity: 0.9;
+            text-decoration: none;
+        }
+        
+        .footer-counter a:hover {
+            color: var(--primary-gold);
+        }
+        
+        /* Sayaç paleti: koyu kahve, bej, beyaz şerit – yazılar koyu zemin üzerinde açık renk */
+        .footer-counter,
+        .footer-counter *,
+        #site-counter-wrap,
+        #site-counter-wrap *,
+        #site-counter-wrap-bottom,
+        #site-counter-wrap-bottom * {
+            font-family: 'Montserrat', sans-serif !important;
+            color: #DDC29B !important;
+        }
+        
+        .footer-counter .counter,
+        .footer-counter [id*="counter"],
+        #site-counter-wrap .counter,
+        #site-counter-wrap [id*="counter"],
+        #site-counter-wrap-bottom .counter,
+        #site-counter-wrap-bottom [id*="counter"] {
+            font-family: 'Fredoka', sans-serif !important;
+            color: #FFFFFF !important;
+            font-weight: 600;
+        }
+        
+        .footer-counter-injected {
+            padding: 12px 0 0;
+            background: #5C3D2E;
+            text-align: center;
+            pointer-events: none;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .footer-counter-injected::after {
+            content: '';
+            display: block;
+            height: 3px;
+            background: #FFFFFF;
+            margin-top: 12px;
+        }
+        
+        .footer-counter-injected > div,
+        .footer-counter-injected > span,
+        .footer-counter-injected > a {
+            display: inline-block;
+        }
+        
+        .footer-counter-injected a {
+            pointer-events: none;
+            cursor: default;
+        }
+        
+        .footer-counter img,
+        #site-counter-wrap img,
+        #site-counter-wrap-bottom img {
+            filter: invert(1) brightness(1.1);
+            opacity: 0.95;
+        }
+        
+        .footer-counter iframe,
+        #site-counter-wrap iframe,
+        #site-counter-wrap-bottom iframe {
+            border-radius: 6px;
+            max-width: 100%;
+        }
+        
+        #site-counter-wrap a {
+            color: #E8E0D0 !important;
+        }
+        
+        #site-counter-wrap a:hover {
+            color: #DDC29B !important;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                background: rgba(245, 241, 232, 0.98);
+                flex-direction: column;
+                padding: 40px;
+                gap: 20px;
+                transition: left 0.3s ease;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .main-text {
+                font-size: 80px;
+            }
+            
+            .divider {
+                width: 220px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+                letter-spacing: 8px;
+            }
+            
+            section {
+                padding: 60px 20px;
+            }
+            
+            .section-title {
+                font-size: 42px;
+            }
+            
+            .menu-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .menu-list-item {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .menu-item-price {
+                align-self: flex-start;
+            }
+            
+            .menu-categories {
+                gap: 10px;
+            }
+            
+            .menu-category-btn {
+                padding: 10px 20px;
+                font-size: 12px;
+            }
+            
+            .reservation-form {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar" class="scrolled">
+        <div class="nav-container">
+            <a href="#home" class="logo-nav">vast</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home">Ana Sayfa</a></li>
+                <li><a href="#menu">Menü</a></li>
+                <li><a href="#reservation">Rezervasyon</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="main-text">vast</h1>
+            <div class="divider"></div>
+            <div class="subtitle">Kahve</div>
+            <div class="subtitle">Pasta</div>
+            <div class="subtitle">Sandwich</div>
+            <div class="scroll-indicator">
+                <span>Keşfet</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu">
+        <h2 class="section-title">Menümüz</h2>
+        <p class="section-subtitle">Lezzetli Seçeneklerimiz</p>
+        
+        <div class="menu-categories">
+            <button class="menu-category-btn active" data-category="espresso-sicak">☕ Espresso Bazlı Sıcak</button>
+            <button class="menu-category-btn" data-category="sicak-icecekler">🌡️ Sıcak İçecekler</button>
+            <button class="menu-category-btn" data-category="soguk-icecekler">❄️ Soğuk İçecekler</button>
+            <button class="menu-category-btn" data-category="ekstralar">➕ Ekstralar</button>
+            <button class="menu-category-btn" data-category="ozel-demlemeler">🫖 Özel Demlemeler</button>
+            <button class="menu-category-btn" data-category="pasta">🍰 Pasta Menüsü</button>
+            <button class="menu-category-btn" data-category="sandwich">🥪 Sandwich Menüsü</button>
+            <button class="menu-category-btn" data-category="vitamin-mix">🍹 Vitamin Mixler</button>
+            <button class="menu-category-btn" data-category="kendi-sandwich">🧩 Kendi Sandwich’in</button>
+        </div>
+        
+        <!-- Espresso Bazlı Sıcak İçecekler -->
+        <div class="menu-content active" id="espresso-sicak-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Espresso</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Double Espresso</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Americano</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺150</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Filtre Kahve</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Red Eye</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺150</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Cappuccino</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺170</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Flat White</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺180</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Cortado</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Espresso Macchiato</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺130</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Caffè Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Pumpkin Spice Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Lotus Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Irish Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Salted Caramel Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Campfire Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Vanilla Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Caramel Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Fıstıklı Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺230</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Dark Mocha</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">White Chocolate Mocha</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">White Berry Mocha</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺220</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Caramel Macchiato</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺220</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Spanish Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺220</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Coco Vast</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺280</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Aerocano</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sıcak İçecekler -->
+        <div class="menu-content" id="sicak-icecekler-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Türk Kahvesi</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Dibek Kahvesi</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Menengiç Kahvesi</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Double Türk Kahvesi</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Sütlü Türk Kahvesi</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Portakallı Türk Kahvesi</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Sıcak Çikolata</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Fıstıklı Sıcak Çikolata</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺230</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Sahlep</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺150</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Çay</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺50</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Fincan Çay</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺70</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Apple Cinnamon Serenity</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Exotic Fruit</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Berry Rose Delight</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Jasmine Rose Garden</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Chai Tea Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Matcha Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Strawberry Matcha Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺230</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Soğuk İçecekler -->
+        <div class="menu-content" id="soguk-icecekler-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Espresso</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺150</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Filtre</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺150</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Red Eye</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺170</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Americano</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺170</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Latte</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺180</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Cappuccino</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺190</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Flat White</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Caramel Macchiato</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺240</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ice Türk Kahvesi</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Frappucino</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Limonata</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Çilekli Limonata</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺150</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Cool Lime</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺180</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Berry Hibiskus</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺180</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Orange Note</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺260</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Mizu Glutensiz Şekersiz Gazoz</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Churchill</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">San Pellegrino</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Ekstralar -->
+        <div class="menu-content" id="ekstralar-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Yulaf Sütü</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Badem Sütü</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Soya Sütü</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Aroma Şurubu</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Extra Shot Espresso</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺30</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Özel Demlemeler -->
+        <div class="menu-content" id="ozel-demlemeler-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">V60</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺240</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Syphon</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺260</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Chemex</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺280</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pasta Menüsü -->
+        <div class="menu-content" id="pasta-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Cédric Grolet</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺350,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">RAFFAE</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺230,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">COCO VAST 2</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺260,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Framboise</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺230,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">ALMAN PASTASI</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺180,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">PROFİTEROL</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ekler Pasta (4 adet)</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ağlayan Pasta</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺160,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Kurabiye Tabağı</div>
+                        <div class="menu-item-description">(2 Adet Islak Kurabiye, 4 Adet Tarçınlı Kurabiye, 4 Adet Tuzlu Kurabiye)</div>
+                    </div>
+                    <div class="menu-item-price">₺160,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">San Sebastian</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺280,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Havuçlu Dilim Rulo</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺200,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Marlenka</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺220,00</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sandwich Menüsü -->
+        <div class="menu-content" id="sandwich-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-image">
+                        <img src="Tr%C3%BCf%20%C4%B0sli%20Gouda.jpg" alt="Trüf İsli Gouda">
+                    </div>
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Trüf İsli Gouda</div>
+                        <div class="menu-item-description">(Füme Antrikot, Gouda, Roka, Taze Domates, Trüf Aioli, Zeytinyağı)</div>
+                    </div>
+                    <div class="menu-item-price">₺380,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Karamim</div>
+                        <div class="menu-item-description">(Karabiberli Roastbeef, Mimolette, Kurutulmuş Domates, Roka, Zeytin Ezmesi, Zeytinyağı)</div>
+                    </div>
+                    <div class="menu-item-price">₺380,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Zugo's</div>
+                        <div class="menu-item-description">(Dana Cotto, Burrata, Taze Domates, Kuzu Kulağı, Ev Yapımı Pesto, Acılı Zeytinyağı, Balzamik)</div>
+                    </div>
+                    <div class="menu-item-price">₺400,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Maldia</div>
+                        <div class="menu-item-description">(Malatya Dana Kavurma, Malatya Peyniri, Kuzu Kulağı, Taze Domates, Maraş Çemeni, Tuzsuz Malatya Tereyağı)</div>
+                    </div>
+                    <div class="menu-item-price">₺350,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Cosmic</div>
+                        <div class="menu-item-description">(Dana Et Füme Roastbeef, Suda Mozzarella, Roka, Kuru Domates, Avokado Sosu, Acılı Zeytinyağı)</div>
+                    </div>
+                    <div class="menu-item-price">₺380,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Füme Hindi &amp; Pesto</div>
+                        <div class="menu-item-description">(Hindi But Füme, Suda Mozzarella, Taze Domates, Evdinyen, Ev Yapımı Pesto, Acılı Zeytinyağı)</div>
+                    </div>
+                    <div class="menu-item-price">₺320,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Kimyonlu Gouda Hindi</div>
+                        <div class="menu-item-description">(Hindi But Füme, Kimyonlu Gouda, Taze Domates, Kuzu Kulağı, Avokado Sosu, Zeytinyağı)</div>
+                    </div>
+                    <div class="menu-item-price">₺320,00</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Mozzarella Pesto</div>
+                        <div class="menu-item-description">(Suda Mozzarella, Taze Domates, Evdinyen, Pesto Sosu, Zeytinyağı, Balzamik Glaze)</div>
+                    </div>
+                    <div class="menu-item-price">₺250,00</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vitamin Mixler -->
+        <div class="menu-content" id="vitamin-mix-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Green Vast</div>
+                        <div class="menu-item-description">(Portakal, Kuzu Kulağı, Limon, Yeşil Elma)</div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ginger Rush</div>
+                        <div class="menu-item-description">(Portakal, Mandalina, Limon, Taze Zencefil)</div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Tropic Mix</div>
+                        <div class="menu-item-description">(Kivi, Muz, Yeşil Elma)</div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ananas suyu</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺220</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Nar suyu</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Portakal suyu</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Havuç suyu</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Reyhan şerbeti</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Ev yapımı limonata</div>
+                        <div class="menu-item-description"></div>
+                    </div>
+                    <div class="menu-item-price">₺160</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Kendi Sandwich’ini Tasarla -->
+        <div class="menu-content" id="kendi-sandwich-menu">
+            <div class="menu-list">
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Füme Antrikot</div>
+                        <div class="menu-item-description">Et seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺240</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Karabiberli Roastbeef</div>
+                        <div class="menu-item-description">Et seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Dana Cotto</div>
+                        <div class="menu-item-description">Et seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Dana Et Füme Roastbeef</div>
+                        <div class="menu-item-description">Et seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺200</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Malatya Dana Kavurma</div>
+                        <div class="menu-item-description">Et seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺180</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Hindi But Füme</div>
+                        <div class="menu-item-description">Et seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺120</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Gouda</div>
+                        <div class="menu-item-description">Peynir seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Kimyonlu Gouda</div>
+                        <div class="menu-item-description">Peynir seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Mimolette</div>
+                        <div class="menu-item-description">Peynir seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Burrata</div>
+                        <div class="menu-item-description">Peynir seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺150</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Suda Mozzarella</div>
+                        <div class="menu-item-description">Peynir seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺130</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Malatya Peyniri</div>
+                        <div class="menu-item-description">Peynir seçeneği</div>
+                    </div>
+                    <div class="menu-item-price">₺100</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Roka</div>
+                        <div class="menu-item-description">Yeşillik &amp; sebze</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Kuzu Kulağı</div>
+                        <div class="menu-item-description">Yeşillik &amp; sebze</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Taze Domates</div>
+                        <div class="menu-item-description">Yeşillik &amp; sebze</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Kurutulmuş Domates</div>
+                        <div class="menu-item-description">Yeşillik &amp; sebze</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Evdinyen</div>
+                        <div class="menu-item-description">Yeşillik &amp; sebze</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Avokado Sosu</div>
+                        <div class="menu-item-description">Sos</div>
+                    </div>
+                    <div class="menu-item-price">₺40</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Pesto</div>
+                        <div class="menu-item-description">Sos</div>
+                    </div>
+                    <div class="menu-item-price">₺40</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Trüflü Mayonez</div>
+                        <div class="menu-item-description">Sos</div>
+                    </div>
+                    <div class="menu-item-price">₺40</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Zeytin Ezmesi</div>
+                        <div class="menu-item-description">Sos</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Maraş Çemeni</div>
+                        <div class="menu-item-description">Sos</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Tuzsuz Malatya Tereyağı</div>
+                        <div class="menu-item-description">Sos</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Zeytinyağı</div>
+                        <div class="menu-item-description">Yağ</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Trüf Yağı</div>
+                        <div class="menu-item-description">Yağ</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Balsamik Glaze</div>
+                        <div class="menu-item-description">Yağ</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+                <div class="menu-list-item">
+                    <div class="menu-item-info">
+                        <div class="menu-item-name">Acılı Zeytinyağı</div>
+                        <div class="menu-item-description">Yağ</div>
+                    </div>
+                    <div class="menu-item-price">₺20</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation">
+        <h2 class="section-title">Rezervasyon</h2>
+        <p class="section-subtitle">Masanızı Ayırtın</p>
+        <form class="reservation-form" id="reservationForm">
+            <div class="form-group">
+                <label for="name">Ad Soyad *</label>
+                <input type="text" id="name" name="name" required="">
+            </div>
+            <div class="form-group">
+                <label for="phone">Telefon *</label>
+                <input type="tel" id="phone" name="phone" required="">
+            </div>
+            <div class="form-group">
+                <label for="email">E-posta</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <div class="form-group">
+                <label for="date">Tarih *</label>
+                <input type="date" id="date" name="date" required="" min="2026-04-03">
+            </div>
+            <div class="form-group">
+                <label for="time">Saat *</label>
+                <input type="time" id="time" name="time" required="">
+            </div>
+            <div class="form-group">
+                <label for="guests">Kişi Sayısı *</label>
+                <select id="guests" name="guests" required="">
+                    <option value="">Seçiniz</option>
+                    <option value="1">1 Kişi</option>
+                    <option value="2">2 Kişi</option>
+                    <option value="3">3 Kişi</option>
+                    <option value="4">4 Kişi</option>
+                    <option value="5+">5+ Kişi</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="message">Özel İstekler</label>
+                <textarea id="message" name="message" placeholder="Özel bir isteğiniz varsa buraya yazabilirsiniz..."></textarea>
+            </div>
+            <button type="submit" class="btn">Rezervasyon Yap</button>
+        </form>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">İletişim</h2>
+        <p class="section-subtitle">Bize Ulaşın</p>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <div class="contact-icon">📍</div>
+                <h3>Adres</h3>
+                <p>Bahçelievler, Taşkent Cd. No:19 D:C, 06500 Çankaya/Ankara, Türkiye<br><a href="https://www.google.com/maps/place/Vast+Coffee+Sandwich+Dessert/@39.930619,32.8288576,53m/data=!3m1!1e3!4m6!3m5!1s0x14d34f2848812887:0xc496ef4e60efbfea!8m2!3d39.9306128!4d32.8289894!16s%2Fg%2F11myf4v__b?entry=ttu" target="_blank" rel="noopener noreferrer">Haritada göster</a></p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">📞</div>
+                <h3>Telefon</h3>
+                <p><a href="tel:+905075231617">0507 523 16 17</a></p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">✉️</div>
+                <h3>E-posta</h3>
+                <p><a href="mailto:info@vastcafe.com">info@vastcafe.com</a><br><a href="mailto:rezervasyon@vastcafe.com">rezervasyon@vastcafe.com</a></p>
+            </div>
+            <div class="contact-card">
+                <div class="contact-icon">🕐</div>
+                <h3>Çalışma Saatleri</h3>
+                <p>Pazartesi - Cuma: 08:00 - 00:00<br>Cumartesi - Pazar: 09:00 - 00:00</p>
+            </div>
+        </div>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps?q=39.9306128,32.8289894&amp;output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="vast Coffee Sandwich Dessert - Konum">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">vast</div>
+            <p class="footer-text">Coffee • Sandwich • Dessert</p>
+            <div class="social-links social-links-icons">
+                <span aria-hidden="true" title="Kahve">☕</span>
+                <span aria-hidden="true" title="Sandviç">🥪</span>
+                <span aria-hidden="true" title="Tatlı">🍰</span>
+            </div>
+            <p class="footer-text" style="margin-top: 30px; font-size: 12px;">
+                © 2026 vast cafe. Bu site debucsoftware tarafından dizayn edilmiştir ve tüm hakları saklıdır.
+            </p>
+
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        
+        // Nav link click: scroll within this document (iframe-friendly for Google Sites)
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    e.preventDefault();
+                    const id = href.slice(1);
+                    const target = document.getElementById(id);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+                navMenu.classList.remove('active');
+            });
+        });
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Reservation form submission
+        const reservationForm = document.getElementById('reservationForm');
+        reservationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Rezervasyon talebiniz alındı! En kısa sürede sizinle iletişime geçeceğiz.');
+            reservationForm.reset();
+        });
+        
+        // Set minimum date to today
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+        
+        // Menu category switching
+        const categoryButtons = document.querySelectorAll('.menu-category-btn');
+        const menuContents = document.querySelectorAll('.menu-content');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.getAttribute('data-category');
+                
+                // Remove active class from all buttons and contents
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                menuContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(`${category}-menu`).classList.add('active');
+            });
+        });
+    </script>
+    <div class="footer-counter footer-counter-injected" id="site-counter-wrap-bottom">
+        <script type="text/javascript" src="https://www.free-counters.org/count/jieh"></script>
+    </div>
+
+</body></html>
