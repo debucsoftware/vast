@@ -506,6 +506,26 @@
             border-radius: 12px;
             display: block;
         }
+
+        .image-modal-close {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            border: 0;
+            background: rgba(255, 255, 255, 0.9);
+            color: #111;
+            font-size: 20px;
+            line-height: 34px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .image-modal-close:hover {
+            background: rgba(255, 255, 255, 1);
+        }
         
         .menu-list-item:hover {
             transform: translateY(-5px);
@@ -2071,6 +2091,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             const imageModal = document.getElementById('imageModal');
             const imageModalImg = document.getElementById('imageModalImg');
+            const imageModalClose = document.getElementById('imageModalClose');
             if (!imageModal || !imageModalImg) return;
 
             document.addEventListener('click', (e) => {
@@ -2087,6 +2108,14 @@
                 imageModalImg.src = '';
             });
 
+            if (imageModalClose) {
+                imageModalClose.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    imageModal.classList.remove('active');
+                    imageModalImg.src = '';
+                });
+            }
+
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     imageModal.classList.remove('active');
@@ -2096,6 +2125,7 @@
         });
     </script>
     <div class="image-modal" id="imageModal" aria-hidden="true">
+        <button class="image-modal-close" id="imageModalClose" type="button" aria-label="Kapat">×</button>
         <img id="imageModalImg" alt="">
     </div>
     <div class="footer-counter footer-counter-injected" id="site-counter-wrap-bottom">
