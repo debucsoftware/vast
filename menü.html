@@ -14,12 +14,12 @@
         }
         
         :root {
-            --primary-gold: #D4AF37;
-            --secondary-gold: #C9A961;
-            --dark-brown: #5C4033;
-            --light-beige: #F5F1E8;
-            --cream: #E8E0D0;
-            --orange: #FF6B35;
+            --primary-gold: #C74332;
+            --secondary-gold: #B83E2F;
+            --dark-brown: #7A2A21;
+            --light-beige: #F3E3CC;
+            --cream: #E0CAAD;
+            --orange: #C74332;
         }
         
         html {
@@ -61,11 +61,15 @@
         }
         
         .logo-nav {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 32px;
-            font-weight: 600;
-            color: #523D2F;
+            display: inline-flex;
+            align-items: center;
             text-decoration: none;
+        }
+
+        .logo-nav img {
+            height: 42px;
+            width: auto;
+            display: block;
         }
         
         .nav-menu {
@@ -160,14 +164,11 @@
             }
         }
         
-        .main-text {
-            font-family: 'Fredoka', sans-serif;
-            font-size: 110px;
-            font-weight: 600;
-            color: #523D2F;
-            letter-spacing: 2px;
+        .hero-logo {
+            width: min(520px, 80vw);
+            height: auto;
             margin-bottom: 20px;
-            position: relative;
+            display: block;
             animation: fadeInUp 1s ease-out, float 6s ease-in-out infinite;
             animation-delay: 0s, 2s;
         }
@@ -208,9 +209,9 @@
             height: 1.5px;
             background: linear-gradient(90deg, 
                 transparent 0%, 
-                #C9A961 20%, 
-                #B8860B 50%, 
-                #C9A961 80%, 
+                var(--cream) 20%, 
+                var(--secondary-gold) 50%, 
+                var(--cream) 80%, 
                 transparent 100%);
             margin: 25px auto;
             opacity: 0.8;
@@ -242,7 +243,7 @@
             font-size: 18px;
             font-weight: 300;
             letter-spacing: 10px;
-            background: linear-gradient(135deg, #5C4033 0%, #3D2817 100%);
+            background: linear-gradient(135deg, var(--dark-brown) 0%, var(--secondary-gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -891,8 +892,8 @@
                 display: flex;
             }
             
-            .main-text {
-                font-size: 80px;
+            .hero-logo {
+                width: min(380px, 82vw);
             }
             
             .divider {
@@ -949,7 +950,7 @@
     <!-- Navigation -->
     <nav id="navbar" class="scrolled">
         <div class="nav-container">
-            <a href="#home" class="logo-nav">vast</a>
+            <a href="#home" class="logo-nav"><img src="vast-logo.png" alt="Vast Cafe"></a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#home">Ana Sayfa</a></li>
                 <li><a href="#menu">Menü</a></li>
@@ -967,7 +968,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1 class="main-text">vast</h1>
+            <img class="hero-logo" src="vast-logo.png" alt="Vast Cafe">
             <div class="divider"></div>
             <div class="subtitle">Kahve</div>
             <div class="subtitle">Pasta</div>
@@ -984,7 +985,7 @@
         <p class="section-subtitle">Lezzetli Seçeneklerimiz</p>
         
         <div class="menu-categories">
-            <button class="menu-category-btn active" data-category="espresso-sicak">☕ Espresso Bazlı Sıcak</button>
+            <button class="menu-category-btn active" data-category="espresso-sicak">🥤 Espresso Bazlı Sıcak</button>
             <button class="menu-category-btn" data-category="sicak-icecekler">🌡️ Sıcak İçecekler</button>
             <button class="menu-category-btn" data-category="soguk-icecekler">❄️ Soğuk İçecekler</button>
             <button class="menu-category-btn" data-category="ekstralar">➕ Ekstralar</button>
@@ -1759,7 +1760,7 @@
             <div class="footer-logo">vast</div>
             <p class="footer-text">Coffee • Sandwich • Dessert</p>
             <div class="social-links social-links-icons">
-                <span aria-hidden="true" title="Kahve">☕</span>
+                <span aria-hidden="true" title="Kahve">🥤</span>
                 <span aria-hidden="true" title="Sandviç">🥪</span>
                 <span aria-hidden="true" title="Tatlı">🍰</span>
             </div>
