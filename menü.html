@@ -2068,28 +2068,31 @@
         });
 
         // Image modal (menu item images)
-        const imageModal = document.getElementById('imageModal');
-        const imageModalImg = document.getElementById('imageModalImg');
+        document.addEventListener('DOMContentLoaded', () => {
+            const imageModal = document.getElementById('imageModal');
+            const imageModalImg = document.getElementById('imageModalImg');
+            if (!imageModal || !imageModalImg) return;
 
-        document.addEventListener('click', (e) => {
-            const img = e.target && e.target.closest ? e.target.closest('.menu-item-image img') : null;
-            if (img) {
-                imageModalImg.src = img.currentSrc || img.src;
-                imageModalImg.alt = img.alt || '';
-                imageModal.classList.add('active');
-            }
-        });
+            document.addEventListener('click', (e) => {
+                const img = e.target && e.target.closest ? e.target.closest('.menu-item-image img') : null;
+                if (img) {
+                    imageModalImg.src = img.currentSrc || img.src;
+                    imageModalImg.alt = img.alt || '';
+                    imageModal.classList.add('active');
+                }
+            });
 
-        imageModal.addEventListener('click', () => {
-            imageModal.classList.remove('active');
-            imageModalImg.src = '';
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
+            imageModal.addEventListener('click', () => {
                 imageModal.classList.remove('active');
                 imageModalImg.src = '';
-            }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    imageModal.classList.remove('active');
+                    imageModalImg.src = '';
+                }
+            });
         });
     </script>
     <div class="image-modal" id="imageModal" aria-hidden="true">
